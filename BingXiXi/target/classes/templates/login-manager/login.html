@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="../bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="css/login.css" type="text/css" />
+        <script type="text/javascript" src="../vue.js"></script>
+        <script type="text/javascript" src="../axios.js"></script>
+	</head>
+	<body>
+		<div class="main">
+			<div class="container login" >
+				<div class="row a1">
+					<div class="col-lg-6 modelchange" @click="change(1)" id="modelchange_login">登陆</div>
+					<div class="col-lg-6 modelchange" @click="change(0)" id="modelchange_zhuce">注册</div>
+				</div>
+				
+				<div class="model-login" id="model_login">
+					<div class="row a1">欢迎回来</div>
+				<div class="row a1">
+					<input class="form-control l" type="text" placeholder="请输入用户名" />
+				</div>
+				<div class="row a1">
+					<input class="form-control l" type="password" placeholder="请输入密码" />
+				</div>
+				<div class="row a1">
+					<input id="login" @click="send" type="button" class="form-control btn-primary" value="登陆"/>
+				</div>
+				</div>
+				<div class="model-zhuce" id="model_zhuce">
+					<div class="row a1">免费注册</div>
+					<div class="row a1">
+						<input class="form-control z" type="text" placeholder="用户名" />
+					</div>
+					<div class="row a1">
+						<input class="form-control z" type="text"  placeholder="密码"/>
+					</div>
+					<div class="row a1">
+						<input class="form-control z" type="text"  placeholder="确认密码"/>
+					</div>
+					<div class="row a1">
+						<input class="form-control z" type="text"  placeholder="年龄"/>
+					</div>
+					<div class="row a1">
+						<input class="form-control z" type="text" placeholder="性别"/>
+					</div>
+					<div class="row a1">
+						<input id="zhuce" @click="send" class="form-control btn-danger" type="button" value="注册" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/login.js" type="text/javascript">
+
+		</script>
+	</body>
+</html>

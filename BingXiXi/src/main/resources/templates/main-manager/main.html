@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="../bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/school.css" />
+    <script type="text/javascript" src="../vue.js"></script>
+    <script type="text/javascript" src="../axios.js"></script>
+</head>
+<body>
+<div class="container main">
+    <div class="row">
+        <div class="col-lg-12 label-danger main-title">
+            <div class="col-lg-7"><div class="row"><div class="col-lg-3" @click="fabupindanmodel('FANHUI')" style="cursor: pointer;">拼拼拼</div></div></div>
+            <div class="col-lg-5" id="showtitle">
+                <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <input id = "pdname" type="text" placeholder="拼单名称" class="form-control"/>
+                        <span class="input-group-btn"><input @click="search" type="button" value="搜索" class=" btn btn-default"  /></span>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="btn-group">
+                        <button type="button" @click="fabupindanmodel('GO')" class="btn btn-danger">发布拼单</button>
+                        <button type="button" @click="fabupindanmodel('MINE')" class="btn btn-danger">我的</button>
+                        <button type="button" @click="fabupindanmodel('OUT')" class="btn btn-danger">注销</button>
+                    </div>
+                </div></div>
+            </div>
+        </div>
+        <div class="row"  id="showmain" style="display: none;">
+            <div class="col-lg-12 ">
+                <!-- 拼单主页面 -->
+                <div class="row pindan" id = "mainpindan" >
+                    <div class="row">
+                        <div class="col-lg-2"><h5 class="info-label">商品分类：</h5></div>
+                        <div class="col-lg-2"><input @click ="getall"  type="button" value="全部" class="btn btn-default btn-group-justified"/></div>
+                        <div class="col-lg-2"><input @click ="saixuan(1)"  type="button" value="美团" class="btn btn-default btn-group-justified"/></div>
+                        <div class="col-lg-2"><input @click ="saixuan(3)"  type="button" value="饿了么" class="btn btn-default btn-group-justified"/></div>
+                        <div class="col-lg-2"><input @click ="saixuan(0)"  type="button" value="淘宝" class="btn btn-default btn-group-justified"/></div>
+                        <div class="col-lg-2"><input @click="saixuan(2)" type="button" value="京东" class="btn btn-default btn-group-justified"/></div>
+                    </div>
+                    <div class="row mainpage" style="overflow: auto;max-height: 600px;" id="fa">
+                    </div>
+                </div>
+
+                <!-- 发布拼单页面 -->
+                <div class="row pindan" id="fabupindan">
+                    <div class="row">
+                        <div class="col-lg-2"><h4 class="info-label">商品</h4></div>
+                        <div class="col-lg-10"><input class="form-control creat" type="text" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2"><h4 class="info-label ">发起人</h4></div>
+                        <div class="col-lg-10"><input class="form-control creat" type="text" v-bind:userid="usermessage.id" v-bind:value="usermessage.username" disabled /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2"><h4 class="info-label">商家</h4></div>
+                        <div class="col-lg-10"><select class="form-control creat">
+                            <option value="0">淘宝</option>
+                            <option value="1">美团</option>
+                            <option value="2">京东</option>
+                            <option value="3">饿了么</option>
+                        </select></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2"><h4 class="info-label">取货地点</h4></div>
+                        <div class="col-lg-10"><input class="form-control creat" type="text" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2"><h4 class="info-label">拼单目标</h4></div>
+                        <div class="col-lg-10"><input class="form-control creat" type="text" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2"><h4 class="info-label">结束时间</h4></div>
+                        <div class="col-lg-10">
+                            <input type="datetime-local" class="form-control creat" id="myLocalDate" value="2019-09-01T10:55:33">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-9"></div>
+                        <div class="col-lg-3">
+                            <button @click="fabupindanmodel('CREAT')" class="btn btn-success btn-group-justified" >发布</button></div>
+                    </div>
+                </div>
+                <!-- 拼单信息页面 -->
+                <div class="row pindan" id="pagemessage">
+                    <div class="row">
+                        <div class="col-lg-5"></div>
+                        <div class="col-lg-7 main2page">
+                            <div class="col-lg-12 msg" style="font-weight: 900;font-size: 30px;"></div>
+                            <div class="col-lg-12 msg"></div>
+                            <div class="col-lg-12 msg"></div>
+                            <div class="col-lg-12 msg"></div>
+                            <div class="col-lg-12 msg"></div>
+                            <div class="col-lg-12">
+                                <input type="button" @click="fabupindanmodel('JOIN')" class="btn btn-primary" value="加入拼单" />
+                            </div>
+                            <div class="col-lg-12">
+
+                                <input type="button" @click="fabupindanmodel('QUIT')" class="btn btn-primary" value="退出拼单" />
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div></div>
+        <div class="row" id="showforuser">
+            <div class="col-lg-2" style="display: none;" id="menubur">
+                <div @click="btnChange(0)"  class="menu" id="ziliaoshezhi">资料设置</div>
+                <div @click="btnChange(1)" class="menu" id="xiugaimima">修改密码</div>
+                <div @click="btnChange(2)" class="menu" id="pindaning">正在进行的拼单</div>
+                <div @click="btnChange(3)"  class="menu" id="pindanhistory">历史拼单</div>
+                <div @click="btnChange(4)"  class="menu" id="usermanager">管理用户</div>
+                <div @click="btnChange(5)"  class="menu" id="pindanmanager">管理拼单</div>
+            </div>
+            <div class="col-lg-10 ">
+                <!-- 资料设置 -->
+                <div class="row menu-item" id="messageshow">
+                    <div class="row bg-white">
+                        <div class="row">
+                            <div class="col-lg-2"><h4 class="info-label">用户名</h4></div>
+                            <div class="col-lg-9"><input type="text" class="form-control" v-model:value="usermessage.username" disabled /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2"><h4 class="info-label">年龄</h4></div>
+                            <div class="col-lg-9"><input type="text" class="form-control" v-model:value="usermessage.age"/></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2"><h4 class="info-label">性别</h4></div>
+                            <div class="col-lg-9"><input type="text" class="form-control" v-model:value="usermessage.sex"/></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2"><h4 class="info-label">联系方式</h4></div>
+                            <div class="col-lg-9"><input type="text" class="form-control" v-model:value="usermessage.tel"/></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2"><h4 class="info-label">地址</h4></div>
+                            <div class="col-lg-9"><input type="text" class="form-control" v-model:value="usermessage.address"/></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-9"></div>
+                            <div class="col-lg-2">
+                                <button @click="fabupindanmodel('SAVE')" class="btn btn-success" >修改</button></div>
+                        </div></div>
+                </div>
+                <!-- 密码修改 -->
+                <div class="row menu-item">
+                    <div class="row bg-white">
+                        <div class="row ">
+                            <div class="col-lg-2"><h4 class="info-label">旧密码</h4></div>
+                            <div class="col-lg-9"><input type="text" class="form-control pas" value="" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2"><h4 class="info-label">新密码</h4></div>
+                            <div class="col-lg-9"><input type="text" class="form-control pas" value=""/></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2"><h4 class="info-label">确认密码</h4></div>
+                            <div class="col-lg-9"><input type="text" class="form-control pas" value=""/></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-9"></div>
+                            <div class="col-lg-2">
+                                <button @click="fabupindanmodel('PASS')" class="btn btn-success" >修改</button></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 正在进行的拼单 -->
+                <div class="row menu-item"  >
+                    <div class="row bg-white">
+                        <div class="col-lg-12">
+                            <table class="table table-hover" >
+                                <thead>
+                                <tr><td colspan="5">点击表格可查看订单详细信息</td></tr>
+                                <tr>
+                                    <th>商品</th>
+                                    <th>商家</th>
+                                    <th>拼单目标</th>
+                                    <th>取货地址</th>
+                                    <th>参与人数</th>
+                                </tr>
+                                </thead>
+
+                                <tbody >
+
+                                <tr v-for="item in product" @click="showMessage(item)" class="form-inline">
+                                    <td>{{item.product}}</td>
+                                    <td>{{item.shop}}</td>
+                                    <td>{{item.target}}</td>
+                                    <td>{{item.address}}</td>
+                                    <td>{{item.contactImg}}</td>
+                                </tr>
+
+                                </tbody>
+                            </table></div></div>
+                    <div class="row bg-white">
+                        <div class="col-lg-4" style="">当前页数:{{pagepar.page}}</div>
+                        <div class="col-lg-4" style="">总页数:{{pagepar.pages}}</div>
+                        <div class="col-lg-4"><button @click="prepage(2)" class="btn btn-default">上一页</button><button @click="nextpage(2)" class="btn btn-default">下一页</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 历史拼单 -->
+                <div class="row menu-item">
+                    <div class="row bg-white">
+                        <div class="col-lg-12">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr><td colspan="5">点击表格可查看订单详细信息</td></tr>
+                                <tr>
+                                    <th>商品</th>
+                                    <th>商家</th>
+                                    <th>拼单目标</th>
+                                    <th>取货地址</th>
+                                    <th>参与人数</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr v-for="item in pro1" @click="showMessage(item)" class="form-inline">
+                                    <td>{{item.product}}</td>
+                                    <td>{{item.shop}}</td>
+                                    <td>{{item.target}}</td>
+                                    <td>{{item.address}}</td>
+                                    <td>{{item.contactImg}}</td>
+                                </tr>
+                                </tbody>
+                            </table></div></div>
+                    <div class="row bg-white">
+                        <div class="col-lg-4" style="">当前页数:{{pagepar.page}}</div>
+                        <div class="col-lg-4" style="">总页数:{{pagepar.pages}}</div>
+                        <div class="col-lg-4"><button @click="prepage(1)" class="btn btn-default">上一页</button><button @click="nextpage(1)" class="btn btn-default">下一页</button>
+                        </div></div>
+                </div>
+
+                <!-- 管理用户 -->
+                <div class="row menu-item">
+                    <div class="row bg-white"><div class="col-lg-12">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>用户名</th>
+                                <th>性别</th>
+                                <th>年龄</th>
+                                <th>联系方式</th>
+                                <th>通讯地址</th>
+                                <th>管理</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="item in userlist" class="form-inline">
+                                <td>{{item.id}}</td>
+                                <td>{{item.username}}</td>
+                                <td>{{item.sex}}</td>
+                                <td>{{item.age}}</td>
+                                <td>{{item.tel}}</td>
+                                <td>{{item.address}}</td>
+                                <td><button @click="fabupindanmodel('DELUSER',item.id)" class="btn btn-danger">删除</button></td>
+                            </tr>
+                            </tbody>
+                        </table></div></div>
+                    <div class="row bg-white">
+                        <div class="col-lg-4" style="">当前页数:{{pagepar.page}}</div>
+                        <div class="col-lg-4" style="">总页数:{{pagepar.pages}}</div>
+                        <div class="col-lg-4"><button @click="prepage(4)" class="btn btn-default">上一页</button><button @click="nextpage(4)" class="btn btn-default">下一页</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 管理拼单 -->
+                <div class="row menu-item">
+
+                    <div class="row bg-white"><div class="col-lg-12">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr><td colspan="5">点击表格可查看订单详细信息</td></tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>商家</th>
+                                <th>商品</th>
+                                <th>发起人ID</th>
+                                <th>取货地址</th>
+                                <th>参与人数</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="item in allproduct" @click="showMessage(item)" class="form-inline">
+
+                                <td>{{item.id}}</td>
+                                <td>{{item.shop}}</td>
+                                <td>{{item.product}}</td>
+                                <td>{{item.leaderid}}</td>
+                                <td>{{item.address}}</td>
+                                <td>{{item.contactImg}}</td>
+                                <td><button @click.stop="fabupindanmodel('USER',item.id)" class="btn btn-success">参与用户</button>&nbsp;<button @click.stop="fabupindanmodel('END',item.id)" class="btn btn-danger">终止</button></td>
+                            </tr>
+                            </tbody>
+                        </table></div></div>
+                    <div class="row bg-white">
+                        <div class="col-lg-4" style="">当前页数:{{pagepar.page}}</div>
+                        <div class="col-lg-4" style="">总页数:{{pagepar.pages}}</div>
+                        <div class="col-lg-4"><button @click="prepage(3)" class="btn btn-default">上一页</button><button @click="nextpage(3)" class="btn btn-default">下一页</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row menu-item2 " id="menu_item2">
+                    <div class="row bg-white">
+
+                        <div class="col-lg-12" style="font-size: 16px;line-height: 25px;margin: 20px;">
+                            <div class="row"></div>
+                            <div class="row mm"></div>
+                            <div class="row mm"></div>
+                            <div class="row mm"></div>
+                            <div class="row mm"></div>
+                            <div class="row mm"></div>
+                            <div class="row mm"></div>
+                            <div class="row mm"></div>
+                            <div class="row mm"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="js/school.js" type="text/javascript">	</script>
+
+</body>
+</html>
