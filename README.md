@@ -4,3 +4,5 @@
 # 2. wordcount
 ## hadoop大数据商品推荐 协同过滤 spark 
 ### 代码 wordcount/src/main/scala/com/ghtesthdp/Shop.scala
+# 3. hadoop报告
+### hadoop实践报告
