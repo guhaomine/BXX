@@ -1,0 +1,152 @@
+@charset "UTF-8";
+body{
+background-color: #69F;		
+}
+*{
+	padding:0;
+	margin:0;
+}
+#main .header{
+	background-color: #69F;
+	height:70px;
+}
+#main .header .tit1{
+	float:left;
+	font-size:28px;
+	line-height:70px;
+	width:300px;
+	text-align:center;
+}
+#main .header .tit2{
+	float:right;
+	width:150px;
+	margin-right:20px;
+}
+#main .header .tit2:hover{
+	background-color:#FFF;
+}
+#main .header .tit2 #adminImg{
+	float:left;
+	padding-top:19px;
+} 
+#main .header .tit2 #admin{
+	font-size:18px;
+	line-height:70px;
+	width:100px;
+	text-align:center;
+}
+/***************************/
+#main .neck{
+	background-color:#9FC;
+	height:52px;
+	
+}
+#main .neck .blank{
+	float:left;
+	border:solid #CCC 1px;
+	border-bottom:0;
+	width:150px;
+	line-height:50px;
+
+	margin-left:20px;
+	margin-right:10px;
+	font-size:18px;
+	text-align:center;
+	
+}
+#main .neck .menu{
+	border:solid #CCC 1px;
+	font-size:18px;
+	line-height:50px;
+	text-align:left;
+	padding-left:30px;
+	
+}
+#main .neck .menu li{
+	border:solid #FFF 1px;
+	float:left;
+	list-style-type:none;
+	width:150px;
+	text-align:center;
+	margin-left:20px;
+	margin-right:10px;
+}
+#main .neck .menu li:hover{
+	background-color:#FFF;
+	font-weight:bold;
+	border:solid #000 1px;
+	line-height:44px;
+}
+
+#main .left{
+	background-color: #9FF;
+	border:solid #CCC 1px;
+	font-size:20px;
+	line-height:50px;
+	width:230px;
+	height:1000px;
+	text-align:left;
+	margin-right:20px;
+	position:absolute;
+	left:0;
+}
+#main .neck .blank:hover{
+background-color:#FFF;
+	font-weight:bold;
+	border:solid #000 1px;
+	line-height:44px;
+
+}
+#main .left li{
+	border:solid #CCC 1px;
+	list-style-type:none;
+	
+}
+#main .left li:hover{
+	font-weight:bold;
+	background-color: #0CF;
+	border:solid #CCC 1px;
+}
+#main .left .picture{
+	float:left;
+	display:block;
+	height:41px;
+	padding:9px 10px 0 30px;
+}
+a{
+	text-decoration:none;
+	color:black;
+}
+
+.right{
+	background-image:url(images/5.jpg);
+	background-repeat:no-repeat;
+	opacity:0.9;
+	height:100%;;
+	position:absolute;
+	width:100%;
+	min-width:800px;
+}
+
+.q{
+	width:250px;
+	height:30px;
+	font-size:28px;
+}
+table{
+	border:2px #1C86EE solid;
+}
+th{
+	font-size:20px;
+	line-height:50px;
+	border:1px #1C86EE solid;
+	width:100px;
+}
+td{
+	line-height:26px;
+	text-align:center;
+	width:150px;
+	height:80px;
+	border:1px #1C86EE solid;
+	cursor:default;
+}
